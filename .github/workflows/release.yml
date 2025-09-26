@@ -4,9 +4,10 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch: {}
 
 permissions:
-  contents: write  # nötig für Release + Commit zurück auf main
+  contents: write
 
 jobs:
   build-release:
@@ -18,15 +19,12 @@ jobs:
           lfs: true
           fetch-depth: 0
 
-      - name: Git LFS Pull (GLB-Dateien)
+      - name: LFS Pull
         run: git lfs pull
 
-      - name: Version aus Tag ableiten
+      - name: Version aus Tag
         id: vars
-        run: |
-          RAW="${GITHUB_REF_NAME}"      # z.B. v1.0.1
-          VER="${RAW#v}"                # -> 1.0.1
-          echo "version=$VER" >> $GITHUB_OUTPUT
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
 
       - name: module.json patchen (version + download)
         run: |
@@ -35,24 +33,21 @@ jobs:
              '.version=$v |
               .download="https://github.com/Chaaaaaaaaarlie/dicesoniceviking/releases/download/v"+$v+"/svik4s-"+$v+".zip"' \
              module.json > module.json.tmp && mv module.json.tmp module.json
-          echo "==> module.json:"
           jq '.version, .download' module.json
 
-      - name: ZIP bauen (Top-Level: module.json, JS, Ordner)
+      - name: ZIP bauen (Top-Level!)
         run: |
           VER="${{ steps.vars.outputs.version }}"
           zip -r "svik4s-$VER.zip" module.json SVIK4S.js blue green purple red turkis
 
-      - name: Release erstellen & Asset hochladen
+      - name: Release + Asset
         uses: softprops/action-gh-release@v2
         with:
           files: svik4s-${{ steps.vars.outputs.version }}.zip
-          # Falls du Release-Text willst:
-          # body: "Automatisches Release v${{ steps.vars.outputs.version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: module.json zurück auf main committen (Manifest aktualisieren)
+      - name: Manifest zurück auf main committen
         env:
           GIT_AUTHOR_NAME: github-actions
           GIT_AUTHOR_EMAIL: actions@github.com
@@ -61,10 +56,8 @@ jobs:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           VER="${{ steps.vars.outputs.version }}"
-          # Auf Default-Branch wechseln und sicherstellen, dass wir dort patchen
           git checkout "$DEFAULT_BRANCH"
           git pull
-          # Datei ggf. erneut patchen (falls Checkout die alte Version holt)
           jq --arg v "$VER" \
              '.version=$v |
               .download="https://github.com/Chaaaaaaaaarlie/dicesoniceviking/releases/download/v"+$v+"/svik4s-"+$v+".zip"' \
