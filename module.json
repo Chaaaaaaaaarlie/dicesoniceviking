@@ -1,9 +1,8 @@
 {
   "id": "svik4s",
-  "type": "module",
   "title": "Dice So Nice – Viking (multi-color)",
   "description": "Mehrere Farbvarianten der Viking-Würfel für Dice So Nice.",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "authors": [
     {
       "name": "hansmeier"
@@ -25,5 +24,5 @@
     "SVIK4S.js"
   ],
   "manifest": "https://raw.githubusercontent.com/Chaaaaaaaaarlie/dicesoniceviking/main/module.json",
-  "download": "https://github.com/Chaaaaaaaaarlie/dicesoniceviking/releases/download/v1.0.7/svik4s-1.0.7.zip"
+  "download": "https://github.com/Chaaaaaaaaarlie/dicesoniceviking/releases/download/v1.0.8/svik4s-1.0.8.zip"
 }
