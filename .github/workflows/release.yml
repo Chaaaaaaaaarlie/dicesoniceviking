@@ -38,7 +38,7 @@ jobs:
       - name: ZIP bauen (Top-Level!)
         run: |
           VER="${{ steps.vars.outputs.version }}"
-          zip -r "svik4s-$VER.zip" module.json SVIK4S.js blue green purple red turkis
+          zip -r "svik4s-$VER.zip" module.json SVIK4S.js *.glb */ -x ".git/*" ".github/*"
 
       - name: Release + Asset
         uses: softprops/action-gh-release@v2
