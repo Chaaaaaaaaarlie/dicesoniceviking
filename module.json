@@ -2,7 +2,7 @@
   "id": "svik4s",
   "title": "Dice So Nice - Viking Multi Color",
   "description": "Q WORKSHOP Viking dice for Dice So Nice with many color, sparkle, and mixed-color variants.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "authors": [
     {
       "name": "hansmeier"
@@ -22,8 +22,8 @@
     ]
   },
   "esmodules": [
-    "SVIK4S.js"
+    "viking-multi-color.js"
   ],
   "manifest": "https://raw.githubusercontent.com/Chaaaaaaaaarlie/dicesoniceviking/main/module.json",
-  "download": "https://github.com/Chaaaaaaaaarlie/dicesoniceviking/releases/download/v1.2.0/svik4s-1.2.0.zip"
+  "download": "https://github.com/Chaaaaaaaaarlie/dicesoniceviking/releases/download/v1.2.1/svik4s-1.2.1.zip"
 }

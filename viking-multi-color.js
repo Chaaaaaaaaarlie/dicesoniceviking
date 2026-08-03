@@ -1,4 +1,4 @@
-// SVIK4S.js
+// Viking Multi Color
 import { DiceSystem } from "../dice-so-nice/api.js";
 
 Hooks.once("diceSoNiceReady", (dice3d) => {
